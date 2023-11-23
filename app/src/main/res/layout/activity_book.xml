@@ -24,14 +24,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:paddingTop="10dp"
-                android:hint="Search Pets" />
+                android:hint="Search Books" />
 
             <Button
                 android:id="@+id/btn_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Search Pet" />
+                android:text="Search Book" />
 
 
         </LinearLayout>
@@ -52,5 +52,6 @@
             android:visibility="visible" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
