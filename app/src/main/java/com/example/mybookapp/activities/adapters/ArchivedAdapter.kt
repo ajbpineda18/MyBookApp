@@ -62,10 +62,8 @@ class ArchivedAdapter (
         val formatter = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
         return formatter.format(date)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedAdapter.BookViewHolder {
-        val binding =
-            ContentArchivedBooksRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ContentArchivedBooksRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BookViewHolder(binding)
     }
     override fun onBindViewHolder(holder: ArchivedAdapter.BookViewHolder, position: Int) {
