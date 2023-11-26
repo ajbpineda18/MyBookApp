@@ -30,7 +30,7 @@
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Published Date Here"/>
+        android:hint="Published Date Here"/>
 
 
     <Button
