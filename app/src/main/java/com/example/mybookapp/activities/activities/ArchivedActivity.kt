@@ -46,6 +46,7 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
                 .setMessage("Are you sure you want to delete this permanently?")
                 .setPositiveButton("Delete") { _, _ ->
                     adapter.onItemDismiss(position)
+                    getBooks()
 
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
@@ -53,7 +54,6 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
                     dialog.dismiss()
                 }
                 .show()
-            getBooks()
 
         }
     }
@@ -72,52 +72,51 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
         itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(binding.rvArchivedBooks)
 
-        binding
-
         getBooks()
     }
     override fun unArchiveBook(bookId: String, position: Int) {
     }
     override fun deleteBook(bookId: String, position: Int) {
-        val coroutineContext = Job() + Dispatchers.IO
-        val scope = CoroutineScope(coroutineContext + CoroutineName("deleteBook"))
-        scope.launch(Dispatchers.IO) {
+        val coroutineScope = CoroutineScope(Job() + Dispatchers.IO + CoroutineName("deleteBook"))
+
+        coroutineScope.launch {
             val book = booksList[position]
             val bookDelete = BsonObjectId(book.id)
-            database.deleteBook(bookDelete)
-            withContext(Dispatchers.Main){
+
+            withContext(Dispatchers.IO) {
+                database.deleteBook(bookDelete)
+            }
+
+            withContext(Dispatchers.Main) {
                 booksList.removeAt(position)
                 adapter.notifyItemRemoved(position)
-                adapter.updateBookList(database.getArchivedBooks().map {mapBooks(it)} as ArrayList<Books>)
+                val updatedBooks = database.getArchivedBooks().map { mapBooks(it) } as ArrayList<Books>
+                adapter.updateBookList(updatedBooks)
+
                 Snackbar.make(binding.root, "Book Deleted Successfully", Snackbar.LENGTH_LONG).show()
             }
         }
     }
+
     override fun refreshData(){
         getBooks()
     }
-    private fun mapBooks(books: BookRealm): Books {
-        return Books(
-            id = books.id.toHexString(),
-            bookName = books.name,
-            author = books.author,
-            dateBookAdded = Date(books.dateBookAdded),
-            dateBookModified = Date(books.dateBookModified),
-            dateBookPublished = Date(books.dateBookPublished)
-        )
-    }
-    fun getBooks() {
-        val coroutineContext = Job() + Dispatchers.IO
-        val scope = CoroutineScope(coroutineContext + CoroutineName("LoadArchivedBooks"))
+    private fun mapBooks(books: BookRealm): Books = Books(
+        id = books.id.toHexString(),
+        bookName = books.name,
+        author = books.author,
+        dateBookAdded = Date(books.dateBookAdded),
+        dateBookModified = Date(books.dateBookModified),
+        dateBookPublished = Date(books.dateBookPublished)
+    )
 
-        scope.launch(Dispatchers.IO) {
+    fun getBooks() {
+        val coroutineScope = CoroutineScope(Job() + Dispatchers.IO + CoroutineName("LoadArchivedBooks"))
+
+        coroutineScope.launch {
             val books = database.getArchivedBooks()
-            val booksList = arrayListOf<Books>()
-            booksList.addAll(
-                books.map {
-                    mapBooks(it)
-                }
-            )
+            val booksList = ArrayList(books.map { mapBooks(it) })
+
             withContext(Dispatchers.Main) {
                 adapter.updateBookList(booksList)
                 adapter.notifyDataSetChanged()
@@ -125,4 +124,5 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
             }
         }
     }
+
 }
