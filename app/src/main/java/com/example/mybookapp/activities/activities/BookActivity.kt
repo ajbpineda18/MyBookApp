@@ -54,7 +54,6 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
 
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
-                    // User clicked Cancel, dismiss the dialog
                     adapter.notifyItemChanged(position)
                     dialog.dismiss()
                 }
@@ -63,20 +62,14 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
 
         }
     }
-
-
-
     override fun refreshData(){
         getBooks()
     }
-
     override fun onResume() {
         super.onResume()
         //TODO: REALM DISCUSSION HERE
         getBooks()
     }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookBinding.inflate(layoutInflater)
@@ -99,16 +92,7 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
             addBookDialog.refreshDataCallback = this
             addBookDialog.show(supportFragmentManager, "AddBookDialog")
         }
-
-//        getOwners()
-
-//        itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
-//        itemTouchHelper.attachToRecyclerView(binding.rvBooks)
-
-
-
     }
-
     private fun mapBooks(books: BookRealm): Books {
         val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
         return Books(
@@ -118,10 +102,8 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
             dateBookAdded = Date(books.dateBookAdded),
             dateBookModified = Date(books.dateBookModified),
             dateBookPublished = Date(books.dateBookPublished)
-
         )
     }
-
     fun getBooks() {
         val coroutineContext = Job() + Dispatchers.IO
         val scope = CoroutineScope(coroutineContext + CoroutineName("LoadAllBooks"))

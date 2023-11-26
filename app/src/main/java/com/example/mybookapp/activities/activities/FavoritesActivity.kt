@@ -49,7 +49,6 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
 
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
-                    // User clicked Cancel, dismiss the dialog
                     adapter.notifyItemChanged(position)
                     dialog.dismiss()
                 }
@@ -76,7 +75,6 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
         getBooks()
 
     }
-
     override fun unFavBook(bookId: String, position: Int) {
         val coroutineContext = Job() + Dispatchers.IO
         val scope = CoroutineScope(coroutineContext + CoroutineName("favBook"))
@@ -91,11 +89,9 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
             }
         }
     }
-
     override fun refreshData(){
         getBooks()
     }
-
     private fun mapBooks(books: BookRealm): Books {
         val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
         return Books(
@@ -105,7 +101,6 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
             dateBookAdded = Date(books.dateBookAdded),
             dateBookModified = Date(books.dateBookModified),
             dateBookPublished = Date(books.dateBookPublished)
-
         )
     }
     fun getBooks() {
@@ -127,6 +122,4 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
             }
         }
     }
-
-
 }

@@ -49,7 +49,6 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
 
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
-                    // User clicked Cancel, dismiss the dialog
                     adapter.notifyItemChanged(position)
                     dialog.dismiss()
                 }
@@ -58,7 +57,6 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
 
         }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArchivedBinding.inflate(layoutInflater)
@@ -77,24 +75,9 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
         binding
 
         getBooks()
-
     }
-
     override fun unArchiveBook(bookId: String, position: Int) {
-//        val coroutineContext = Job() + Dispatchers.IO
-//        val scope = CoroutineScope(coroutineContext + CoroutineName("unarchiveBook"))
-//        scope.launch(Dispatchers.IO) {
-//            val book = booksList[position]
-//            database.unArchiveBook(book)
-//            withContext(Dispatchers.Main){
-//                booksList.removeAt(position)
-//                adapter.notifyItemRemoved(position)
-//                adapter.updateBookList(database.getFavoriteBooks().map {mapBooks(it)} as ArrayList<Books>)
-//                Snackbar.make(binding.root, "Book Unarchived Successfully", Snackbar.LENGTH_LONG).show()
-//            }
-//        }
     }
-
     override fun deleteBook(bookId: String, position: Int) {
         val coroutineContext = Job() + Dispatchers.IO
         val scope = CoroutineScope(coroutineContext + CoroutineName("deleteBook"))
@@ -110,13 +93,9 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
             }
         }
     }
-
     override fun refreshData(){
         getBooks()
     }
-
-
-
     private fun mapBooks(books: BookRealm): Books {
         return Books(
             id = books.id.toHexString(),
@@ -125,10 +104,8 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
             dateBookAdded = Date(books.dateBookAdded),
             dateBookModified = Date(books.dateBookModified),
             dateBookPublished = Date(books.dateBookPublished)
-
         )
     }
-
     fun getBooks() {
         val coroutineContext = Job() + Dispatchers.IO
         val scope = CoroutineScope(coroutineContext + CoroutineName("LoadArchivedBooks"))

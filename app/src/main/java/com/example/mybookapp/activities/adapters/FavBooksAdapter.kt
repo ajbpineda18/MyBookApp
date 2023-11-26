@@ -19,7 +19,6 @@ class FavBooksAdapter(
 
     private lateinit var book: Books
     private var database = RealmDatabase()
-
     interface FavBooksAdapterInterface {
         fun unFavBook(bookId: String, position: Int)
         fun refreshData()

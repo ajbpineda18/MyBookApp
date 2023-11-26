@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnArchivedList.setOnClickListener(this)
 
     }
-
     override fun onClick(p0: View?) {
         when(p0!!.id){
             R.id.btn_book_list -> {

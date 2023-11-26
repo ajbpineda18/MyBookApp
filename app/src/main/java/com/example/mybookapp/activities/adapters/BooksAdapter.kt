@@ -30,20 +30,14 @@ class BooksAdapter(
 
     private lateinit var book: Books
     private var database = RealmDatabase()
-    //lateinit var refreshDataCallback: AddBookDialog.RefreshDataInterface
 
     interface BooksAdapterInterface {
         fun archiveBook(bookId: ObjectId, position: Int)
-
-        //        fun archiveOwner(ownerId: String, position: Int)
-//        fun deleteOwnerAndTransferPets(ownerId: String, position: Int)
         fun refreshData()
     }
-
     fun setBook(book: Books) {
         this.book = book
     }
-
     inner class BookViewHolder(private val binding: ContentBooksRvBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -64,76 +58,50 @@ class BooksAdapter(
                     scope.launch(Dispatchers.IO) {
                         database.favBook(book)
                         withContext(Dispatchers.Main) {
-                            // You can update the UI or show a message if needed
                             Toast.makeText(context, "Book is added to Favorites List!", Toast.LENGTH_LONG).show()
-                            // Refresh data if necessary
                             bookAdapterCallback.refreshData()
                         }
                     }
-
-
-//                btnEditOwner.isEnabled = itemData.name != "Lotus"
-//
-//                btnEditOwner.setOnClickListener {
-//                    val editOwnerDialog = EditOwner()
-//                    editOwnerDialog.refreshDataCallback = object : EditPet.RefreshDataInterface{
-//                        override fun refreshData() {
-//                            ownerAdapterCallback.refreshData()
-//                        }
-//                    }
-//                    editOwnerDialog.bindOwnerData(itemData)
-//                    editOwnerDialog.show(fragmentManager, null)
-//                }
                 }
             }
         }
     }
-
     private fun formatDate(date: Date): String {
         val formatter = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
         return formatter.format(date)
     }
-
     fun LocalDate.formatted(): String {
         val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy")
         return format(formatter)
     }
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val binding =
             ContentBooksRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BookViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val bookData = booksList[position]
         holder.bind(bookData)
         holder.itemView.tag = position
     }
-
     override fun getItemCount(): Int {
         return booksList.size
     }
-
     fun updateBookList(booksList: ArrayList<Books>) {
         this.booksList.clear()
         this.booksList.addAll(booksList)
         notifyDataSetChanged()
     }
-
     fun getBooksId(position: Int): String? {
         if (position in 0 until booksList.size) {
             return booksList[position].id
         }
         return null
     }
-
     override fun onItemDismiss(position: Int) {
         if (position in 0 until booksList.size) {
             val bookId = BsonObjectId(booksList[position].id)
             bookAdapterCallback.archiveBook(bookId, position)
-            //ownerAdapterCallback.archiveOwner(ownerId, position)
         } else {
             //Log.d("OwnerAdapter", "Error: Position out of bounds")
         }

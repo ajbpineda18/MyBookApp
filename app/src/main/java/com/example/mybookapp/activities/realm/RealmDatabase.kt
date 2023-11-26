@@ -16,19 +16,15 @@ class RealmDatabase {
                 .build()
         Realm.open(config)
     }
-
     fun getAllBooks(): List<BookRealm>{
         return realm.query<BookRealm>("isArchived == false && isFav == false").find()
     }
-
     fun getArchivedBooks(): List<BookRealm>{
         return realm.query<BookRealm>("isArchived == true").find()
     }
-
     fun getFavoriteBooks(): List<BookRealm>{
         return realm.query<BookRealm>("isFav == true").find()
     }
-
     suspend fun addBook(bookName: String, bookAuthor: String, datePublished: Long, dateAdded: Long, dateModified: Long) {
         val dupeBookChecker: BookRealm? = realm.query<BookRealm>("author == $0 && name == $1 && dateBookPublished == $2", bookAuthor, bookName, datePublished).first().find()
         realm.write {
@@ -48,7 +44,6 @@ class RealmDatabase {
             }
         }
     }
-
     suspend fun favBook(book: Books){
         realm.write {
             val bookID = BsonObjectId(book.id)
@@ -63,7 +58,6 @@ class RealmDatabase {
             }
         }
     }
-
     suspend fun unFavBook(book: Books){
         realm.write {
             val bookID = BsonObjectId(book.id)
@@ -78,7 +72,6 @@ class RealmDatabase {
             }
         }
     }
-
     suspend fun archiveBook(book: Books){
         val archiveBookID = BsonObjectId(book.id)
         val bookRealm = realm.query<BookRealm>("id == $0", archiveBookID).first().find()
@@ -92,9 +85,7 @@ class RealmDatabase {
                 throw IllegalStateException("Book with Title: $archiveBookID is Not Found. Cannot Update.")
             }
         }
-
     }
-
     suspend fun unArchiveBook(book: Books){
         val archiveBookID = BsonObjectId(book.id)
         val bookRealm = realm.query<BookRealm>("id == $0", archiveBookID).first().find()
@@ -108,9 +99,7 @@ class RealmDatabase {
                 throw IllegalStateException("Book with Title: $archiveBookID is Not Found. Cannot Update.")
             }
         }
-
     }
-
     suspend fun deleteBook(bookId: ObjectId){
         //val deleteID = BsonObjectId(book.id)
         realm.write {
