@@ -144,7 +144,7 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
             withContext(Dispatchers.Main) {
                 adapter.updateBookList(booksList)
                 adapter.notifyDataSetChanged()
-                binding.empty.text = if (booksList.isEmpty()) "No Books Archived in this List" else ""
+                binding.empty.text = if (booksList.isEmpty()) "\nNo Books Are Archived" else ""
             }
         }
     }

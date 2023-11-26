@@ -137,7 +137,7 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
             withContext(Dispatchers.Main) {
                 adapter.updateBookList(booksList)
                 adapter.notifyDataSetChanged()
-                binding.empty.text = if (booksList.isEmpty()) "No Books Added in this List" else ""
+                binding.empty.text = if (booksList.isEmpty()) "\nNo Books Added in this List" else ""
             }
         }
     }
