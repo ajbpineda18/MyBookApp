@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybookapp.activities.adapters.ArchivedAdapter
-import com.example.mybookapp.activities.adapters.FavBooksAdapter
 import com.example.mybookapp.activities.models.Books
 import com.example.mybookapp.activities.realm.BookRealm
 import com.example.mybookapp.activities.realm.RealmDatabase
 import com.example.mybookapp.databinding.ActivityArchivedBinding
-import com.example.mybookapp.databinding.ActivityFavoritesBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +21,7 @@ import kotlinx.coroutines.withContext
 import org.mongodb.kbson.BsonObjectId
 import java.util.Date
 
-class ArchivedBooks: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapterInterface {
+class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapterInterface {
     private lateinit var binding: ActivityArchivedBinding
     private lateinit var adapter: ArchivedAdapter
     private lateinit var booksList: ArrayList<Books>
@@ -43,7 +41,7 @@ class ArchivedBooks: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapterIn
             val position = viewHolder.adapterPosition
             val bookId = adapter.getBooksId(position)
 
-            AlertDialog.Builder(this@ArchivedBooks)
+            AlertDialog.Builder(this@ArchivedActivity)
                 .setTitle("Delete")
                 .setMessage("Are you sure you want to permanently delete this?")
                 .setPositiveButton("Delete") { _, _ ->
