@@ -101,7 +101,6 @@ class RealmDatabase {
         }
     }
     suspend fun deleteBook(bookId: ObjectId){
-        //val deleteID = BsonObjectId(book.id)
         realm.write {
             query<BookRealm>("id == $0", bookId).first().find()?.let { delete(it) } ?: throw IllegalStateException("Book Not Found")
         }

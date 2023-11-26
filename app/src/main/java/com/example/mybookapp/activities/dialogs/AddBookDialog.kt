@@ -53,63 +53,78 @@ class AddBookDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
+        binding.apply {
             btnDatePublished.setOnClickListener {
                 showDatePicker()
             }
+
             btnAddBook.setOnClickListener {
-                if (edtBookName.text.isNullOrEmpty()) {
+                val bookName = edtBookName.text.toString()
+                val bookAuthor = edtAuthor.text.toString()
+
+                if (bookName.isBlank()) {
                     edtBookName.error = "Required"
                     return@setOnClickListener
                 }
-                if (edtAuthor.text.isNullOrEmpty()) {
+
+                if (bookAuthor.isBlank()) {
                     edtAuthor.error = "Required"
                     return@setOnClickListener
                 }
-                val bookName = edtBookName.text.toString()
-                val bookAuthor = edtAuthor.text.toString()
-                val bookPublished = date!!.time
+
+                val bookPublished = date?.time ?: run {
+                    Toast.makeText(activity, "Error! Book Published date is null!", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+
                 val currentDate = Calendar.getInstance().time.time
 
-                if(bookPublished != null){
-                    val coroutineContext = Job() + Dispatchers.IO
-                    val scope = CoroutineScope(coroutineContext + CoroutineName("addBookToRealm"))
-                    scope.launch(Dispatchers.IO) {
+                val coroutineContext = Job() + Dispatchers.IO
+                val scope = CoroutineScope(coroutineContext + CoroutineName("addBookToRealm"))
+                scope.launch(Dispatchers.IO) {
+                    try {
                         database.addBook(bookName, bookAuthor, bookPublished, currentDate, currentDate)
                         withContext(Dispatchers.Main) {
                             Toast.makeText(activity, "This Book has been Added!", Toast.LENGTH_LONG).show()
                             refreshDataCallback.refreshData()
                             dialog?.dismiss()
                         }
+                    } catch (e: IllegalStateException) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(activity, e.message, Toast.LENGTH_LONG).show()
+                        }
                     }
-                }
-                else{
-                    Toast.makeText(activity, "Error! $bookPublished is null!", Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
+
     private fun showDatePicker() {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+
         val datePickerDialog = DatePickerDialog(
             requireContext(),
-            { _, selectedYear, selectedMonth, selectedDay ->
+            DatePickerDialog.OnDateSetListener { _, selectedYear, selectedMonth, selectedDay ->
                 val selectedCalendar = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
                 val selectedDate = selectedCalendar.time
-                date = selectedDate
 
-                binding.tvDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)
-                binding.btnAddBook.isEnabled = true
+                updateSelectedDate(selectedDate)
             },
             year,
             month,
             day
         )
+
         datePickerDialog.show()
+    }
+    private fun updateSelectedDate(selectedDate: Date) {
+        date = selectedDate
+        binding.tvDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)
+        binding.btnAddBook.isEnabled = true
     }
 }
