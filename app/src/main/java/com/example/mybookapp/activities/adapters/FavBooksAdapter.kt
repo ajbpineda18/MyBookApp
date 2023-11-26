@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mybookapp.activities.models.Books
 import com.example.mybookapp.activities.realm.RealmDatabase
 import com.example.mybookapp.databinding.ContentFavBooksRvBinding
-import ph.edu.rv_realm_quiz.adapters.ItemTouchHelperAdapter
+import com.example.mybookapp.activities.adapters.ItemTouchHelperAdapter
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
