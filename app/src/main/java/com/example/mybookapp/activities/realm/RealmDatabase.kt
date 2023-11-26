@@ -1,11 +1,10 @@
-package ph.edu.rv_realm_quiz.realm
+package com.example.mybookapp.activities.realm
 
+import com.example.mybookapp.activities.models.Books
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
 import org.mongodb.kbson.BsonObjectId
-import ph.edu.rv_realm_quiz.models.Books
-import java.lang.IllegalStateException
 
 class RealmDatabase {
     private val realm: Realm by lazy {

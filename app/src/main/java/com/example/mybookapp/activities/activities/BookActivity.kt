@@ -14,9 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ph.edu.rv_realm_quiz.adapters.BooksAdapter
-import ph.edu.rv_realm_quiz.realm.BookRealm
-import ph.edu.rv_realm_quiz.realm.RealmDatabase
+import com.example.mybookapp.activities.adapters.BooksAdapter
+import com.example.mybookapp.activities.realm.BookRealm
+import com.example.mybookapp.activities.realm.RealmDatabase
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -74,7 +74,7 @@ class BookActivity: AppCompatActivity(), BooksAdapter.BooksAdapterInterface, Add
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = BookActivity.inflate(layoutInflater)
+        binding = BookActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val layoutManger = LinearLayoutManager(this)

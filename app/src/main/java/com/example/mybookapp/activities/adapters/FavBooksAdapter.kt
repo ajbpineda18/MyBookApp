@@ -1,14 +1,12 @@
-package ph.edu.rv_realm_quiz.adapters
+package com.example.mybookapp.activities.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybookapp.activities.models.Books
-import ph.edu.rv_realm_quiz.databinding.ContentBooksRvBinding
-import ph.edu.rv_realm_quiz.databinding.ContentFavBooksRvBinding
-import ph.edu.rv_realm_quiz.models.Books
+import com.example.mybookapp.databinding.ContentFavBooksRvBinding
+import ph.edu.rv_realm_quiz.adapters.ItemTouchHelperAdapter
 import ph.edu.rv_realm_quiz.realm.RealmDatabase
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -18,7 +16,7 @@ class FavBooksAdapter(
     private var booksList: ArrayList<Books>,
     private val context: Context,
     private val bookAdapterCallback: FavBooksAdapterInterface,
-) : RecyclerView.Adapter<FavBooksAdapter.BookViewHolder>(), ItemTouchHelperAdapter{
+) : RecyclerView.Adapter<FavBooksAdapter.BookViewHolder>(), ItemTouchHelperAdapter {
 
     private lateinit var book: Books
     private var database = RealmDatabase()

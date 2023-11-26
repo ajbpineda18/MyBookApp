@@ -1,7 +1,7 @@
-package ph.edu.rv_realm_quiz.realm
+package com.example.mybookapp.activities.realm
 
-import io.realm.kotlin.types.annotations.PrimaryKey
 import io.realm.kotlin.types.RealmObject
+import io.realm.kotlin.types.annotations.PrimaryKey
 import org.mongodb.kbson.ObjectId
 
 class BookRealm : RealmObject{

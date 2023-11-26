@@ -7,39 +7,37 @@
     android:padding="10dp">
 
     <EditText
-        android:id="@+id/edt_pet_name"
+        android:id="@+id/edt_book_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Pet Name"/>
-
-    <Spinner
-        android:id="@+id/spType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/pet_arrays"
-        android:padding="10dp"
-        android:prompt="@string/pet_type"
-        android:scrollbarSize="8dp"
-        android:textSize="15sp" />
+        android:hint="Book Name"/>
 
     <EditText
-        android:id="@+id/edt_age"
+        android:id="@+id/edt_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Pet Age"/>
+        android:hint="Author Name"/>
 
-    <EditText
-        android:id="@+id/edt_owner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="true"
-        android:hint="Owner name" />
+
 
     <Button
-        android:id="@+id/btn_add"
+        android:id="@+id/btn_date_published"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add pet" />
+        android:text="Date Published" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Published Date Here"/>
+
+
+    <Button
+        android:id="@+id/btn_add_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Add Book" />
 
 </LinearLayout>

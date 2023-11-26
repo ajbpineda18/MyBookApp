@@ -1,21 +1,20 @@
-package ph.edu.rv_realm_quiz.adapters
+package com.example.mybookapp.activities.adapters
 
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mybookapp.activities.models.Books
+import com.example.mybookapp.databinding.ContentBooksRvBinding
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ph.edu.rv_realm_quiz.databinding.ContentBooksRvBinding
-import ph.edu.rv_realm_quiz.dialogs.AddBookDialog
-import ph.edu.rv_realm_quiz.models.Books
+import ph.edu.rv_realm_quiz.adapters.ItemTouchHelperAdapter
 import ph.edu.rv_realm_quiz.realm.RealmDatabase
 import java.text.SimpleDateFormat
 import java.time.LocalDate

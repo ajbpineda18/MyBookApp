@@ -1,7 +1,6 @@
 package com.example.mybookapp.activities.dialogs
 
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import com.example.mybookapp.databinding.DialogAddBookBinding
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ph.edu.rv_realm_quiz.databinding.DialogAddBookBinding
 import ph.edu.rv_realm_quiz.realm.RealmDatabase
 import java.text.SimpleDateFormat
 import java.util.Calendar
