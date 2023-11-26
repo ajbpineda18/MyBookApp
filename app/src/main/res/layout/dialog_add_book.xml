@@ -10,13 +10,13 @@
         android:id="@+id/edt_book_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title"/>
+        android:hint="Title:"/>
 
     <EditText
         android:id="@+id/edt_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Author Name"/>
+        android:hint="Author's Name:"/>
 
 
 
@@ -24,13 +24,13 @@
         android:id="@+id/btn_date_published"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date Published" />
+        android:text="Date Picker" />
 
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Published Date Here"/>
+        android:text="Published Date Here"/>
 
 
     <Button
