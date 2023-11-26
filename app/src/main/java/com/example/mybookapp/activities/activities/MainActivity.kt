@@ -10,29 +10,29 @@ import com.example.mybookapp.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(getLayoutInflater())
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnBookList.setOnClickListener(this)
         binding.btnFavoritesList.setOnClickListener(this)
         binding.btnArchivedList.setOnClickListener(this)
-
     }
-    override fun onClick(p0: View?) {
-        when(p0!!.id){
-            R.id.btn_book_list -> {
-                val intent = Intent(this, BookActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.btn_favorites_list -> {
-                val intent = Intent(this, FavoritesActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.btn_archived_list -> {
-                val intent = Intent(this, ArchivedActivity::class.java)
-                startActivity(intent)
+
+    override fun onClick(view: View?) {
+        view?.let {
+            when (it.id) {
+                R.id.btn_book_list -> {
+                    startActivity(Intent(this, BookActivity::class.java))
+                }
+                R.id.btn_favorites_list -> {
+                    startActivity(Intent(this, FavoritesActivity::class.java))
+                }
+                R.id.btn_archived_list -> {
+                    startActivity(Intent(this, ArchivedActivity::class.java))
+                }
             }
         }
     }
