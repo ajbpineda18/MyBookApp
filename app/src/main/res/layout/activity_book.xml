@@ -21,7 +21,8 @@
             android:id="@+id/rv_books"
             android:layout_width="match_parent"
             android:layout_height="595dp"
-            android:padding="10dp" />
+            android:padding="10dp"
+            />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -30,7 +31,8 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:contentDescription="addBook"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add"
+            android:padding="4dp"/>
 
 
     </LinearLayout>

@@ -22,7 +22,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class BookActivity: AppCompatActivity(), BooksAdapter.BooksAdapterInterface, AddBookDialog.RefreshDataInterface {
+class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
+    AddBookDialog.RefreshDataInterface {
     private lateinit var binding: ActivityBookBinding
     private lateinit var adapter: BooksAdapter
     private lateinit var booksList: ArrayList<Books>
@@ -40,46 +41,39 @@ class BookActivity: AppCompatActivity(), BooksAdapter.BooksAdapterInterface, Add
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.adapterPosition
-            val books = adapter.getBooksId(position)
+            val booksId = adapter.getBooksId(position)
 
             AlertDialog.Builder(this@BookActivity)
                 .setTitle("Delete")
                 .setMessage("Are you sure you want to archive this?")
                 .setPositiveButton("Archive") { _, _ ->
                     adapter.onItemDismiss(position)
-
+                    getBooks()
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
-                    // User clicked Cancel, dismiss the dialog
                     adapter.notifyItemChanged(position)
                     dialog.dismiss()
                 }
                 .show()
-            getBooks()
-
         }
     }
 
-
-
-    override fun refreshData(){
+    override fun refreshData() {
         getBooks()
     }
 
     override fun onResume() {
         super.onResume()
-        //TODO: REALM DISCUSSION HERE
         getBooks()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val layoutManger = LinearLayoutManager(this)
-        binding.rvBooks.layoutManager = layoutManger
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvBooks.layoutManager = layoutManager
 
         booksList = arrayListOf()
         adapter = BooksAdapter(booksList, this, this)
@@ -90,19 +84,11 @@ class BookActivity: AppCompatActivity(), BooksAdapter.BooksAdapterInterface, Add
 
         getBooks()
 
-        binding.fab.setOnClickListener{
+        binding.fab.setOnClickListener {
             val addBookDialog = AddBookDialog()
             addBookDialog.refreshDataCallback = this
             addBookDialog.show(supportFragmentManager, "AddBookDialog")
         }
-
-//        getOwners()
-
-//        itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
-//        itemTouchHelper.attachToRecyclerView(binding.rvBooks)
-
-
-
     }
 
     private fun mapBooks(books: BookRealm): Books {
@@ -114,40 +100,22 @@ class BookActivity: AppCompatActivity(), BooksAdapter.BooksAdapterInterface, Add
             dateBookAdded = Date(books.dateBookAdded),
             dateBookModified = Date(books.dateBookModified),
             dateBookPublished = Date(books.dateBookPublished)
-
         )
     }
 
-
-
-
-
-    fun getBooks() {
-        val coroutineContext = Job() + Dispatchers.IO
-        val scope = CoroutineScope(coroutineContext + CoroutineName("LoadAllBooks"))
-
-        scope.launch(Dispatchers.IO) {
-            val books = database.getAllBooks()
-            val booksList = arrayListOf<Books>()
-            booksList.addAll(
-                books.map {
-                    mapBooks(it)
-                }
-            )
-            withContext(Dispatchers.Main) {
-                adapter.updateBookList(booksList)
-                adapter.notifyDataSetChanged()
-                binding.empty.text = if (booksList.isEmpty()) "No Books Yet..." else ""
-            }
+    private suspend fun loadAllBooks() {
+        val books = database.getAllBooks()
+        val booksList = ArrayList(books.map { mapBooks(it) })
+        withContext(Dispatchers.Main) {
+            adapter.updateBookList(booksList)
+            adapter.notifyDataSetChanged()
+            binding.empty.text = if (booksList.isEmpty()) "No Books Yet..." else ""
         }
     }
 
-//    override fun archiveBooks(ownerId: String, position: Int) {
-//        val coroutineContext = Job() + Dispatchers.IO
-//        val scope = CoroutineScope(coroutineContext + CoroutineName("archiveBook"))
-//        scope.launch(Dispatchers.IO) {
-//
-//        }
-//    }
-
+    private fun getBooks() {
+        val coroutineContext = Job() + Dispatchers.IO
+        val scope = CoroutineScope(coroutineContext + CoroutineName("LoadAllBooks"))
+        scope.launch { loadAllBooks() }
+    }
 }
