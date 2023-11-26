@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("io.realm.kotlin")
 }
 
 android {
@@ -9,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.mybookapp"
-        minSdk = 24
-        targetSdk = 33
+        minSdk = 27
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 

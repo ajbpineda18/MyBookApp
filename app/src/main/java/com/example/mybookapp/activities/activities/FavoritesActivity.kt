@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mybookapp.activities.adapters.FavBooksAdapter
 import com.example.mybookapp.activities.models.Books
+import com.example.mybookapp.activities.realm.BookRealm
+import com.example.mybookapp.activities.realm.RealmDatabase
+import com.example.mybookapp.databinding.ActivityFavoritesBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -14,15 +18,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.example.mybookapp.activities.adapters.FavBooksAdapter
-import com.example.mybookapp.activities.realm.BookRealm
-import com.example.mybookapp.activities.realm.RealmDatabase
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterInterface {
-    private lateinit var binding: FavoritesActivity
+    private lateinit var binding: ActivityFavoritesBinding
     private lateinit var adapter: FavBooksAdapter
     private lateinit var booksList: ArrayList<Books>
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -59,7 +60,7 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FavoritesActivityBinding.inflate(layoutInflater)
+        binding = ActivityFavoritesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val layoutManger = LinearLayoutManager(this)

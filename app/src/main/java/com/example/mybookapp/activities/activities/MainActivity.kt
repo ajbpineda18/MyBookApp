@@ -1,9 +1,9 @@
 package com.example.mybookapp.activities.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mybookapp.R
 import com.example.mybookapp.databinding.ActivityMainBinding
 

@@ -13,6 +13,15 @@
         android:theme="@style/Theme.MyBookApp"
         tools:targetApi="31">
         <activity
+            android:name=".activities.activities.BookActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.activities.FavoritesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.activities.ArchivedActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.activities.MainActivity"
             android:exported="true">
             <intent-filter>

@@ -6,23 +6,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mybookapp.activities.adapters.BooksAdapter
 import com.example.mybookapp.activities.dialogs.AddBookDialog
 import com.example.mybookapp.activities.models.Books
+import com.example.mybookapp.activities.realm.BookRealm
+import com.example.mybookapp.activities.realm.RealmDatabase
+import com.example.mybookapp.databinding.ActivityBookBinding
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.example.mybookapp.activities.adapters.BooksAdapter
-import com.example.mybookapp.activities.realm.BookRealm
-import com.example.mybookapp.activities.realm.RealmDatabase
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class BookActivity: AppCompatActivity(), BooksAdapter.BooksAdapterInterface, AddBookDialog.RefreshDataInterface {
-    private lateinit var binding: BookActivity
+    private lateinit var binding: ActivityBookBinding
     private lateinit var adapter: BooksAdapter
     private lateinit var booksList: ArrayList<Books>
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -74,7 +75,7 @@ class BookActivity: AppCompatActivity(), BooksAdapter.BooksAdapterInterface, Add
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = BookActivityBinding.inflate(layoutInflater)
+        binding = ActivityBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val layoutManger = LinearLayoutManager(this)

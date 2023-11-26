@@ -8,12 +8,11 @@ import org.mongodb.kbson.BsonObjectId
 
 class RealmDatabase {
     private val realm: Realm by lazy {
-        val config =
-            RealmConfiguration.Builder(setOf(BookRealm::class)).schemaVersion(1).initialData {
-
-            }
-                .build()
-        Realm.open(config)
+        val configuration = RealmConfiguration
+            .Builder(schema = setOf(BookRealm::class))
+            .schemaVersion(1)
+            .build()
+        Realm.open(configuration)
     }
 
     fun getAllBooks(): List<BookRealm>{
