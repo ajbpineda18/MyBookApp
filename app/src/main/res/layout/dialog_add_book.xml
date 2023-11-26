@@ -10,7 +10,7 @@
         android:id="@+id/edt_book_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Book Name"/>
+        android:hint="Title"/>
 
     <EditText
         android:id="@+id/edt_author"
