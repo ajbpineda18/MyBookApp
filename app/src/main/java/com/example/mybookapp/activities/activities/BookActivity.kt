@@ -47,8 +47,8 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
             val books = adapter.getBooksId(position)
 
             AlertDialog.Builder(this@BookActivity)
-                .setTitle("Delete")
-                .setMessage("Are you sure you want to archive this?")
+                .setTitle("Archive")
+                .setMessage("Do you want to archive this book?")
                 .setPositiveButton("Archive") { _, _ ->
                     adapter.onItemDismiss(position)
 
@@ -137,7 +137,7 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
             withContext(Dispatchers.Main) {
                 adapter.updateBookList(booksList)
                 adapter.notifyDataSetChanged()
-                binding.empty.text = if (booksList.isEmpty()) "No Books Yet..." else ""
+                binding.empty.text = if (booksList.isEmpty()) "No Books Added in this List" else ""
             }
         }
     }

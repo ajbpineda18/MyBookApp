@@ -123,7 +123,7 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
             withContext(Dispatchers.Main) {
                 adapter.updateBookList(booksList)
                 adapter.notifyDataSetChanged()
-                binding.empty.text = if (booksList.isEmpty()) "No Favorite Books Yet..." else ""
+                binding.empty.text = if (booksList.isEmpty()) "No Favorite Books Yet" else ""
             }
         }
     }

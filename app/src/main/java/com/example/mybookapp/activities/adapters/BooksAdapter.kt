@@ -49,7 +49,7 @@ class BooksAdapter(
 
         fun bind(book: Books) {
             with(binding) {
-                txtBookName.text = String.format("Book: %s", book.bookName)
+                txtBookName.text = String.format("Title: %s", book.bookName)
                 txtAuthor.text = String.format("Author: %s", book.author)
                 txtPublished.text =
                     String.format("Date Published: %s", formatDate(book.dateBookPublished))
@@ -65,7 +65,7 @@ class BooksAdapter(
                         database.favBook(book)
                         withContext(Dispatchers.Main) {
                             // You can update the UI or show a message if needed
-                            Toast.makeText(context, "Book Moved to Favorites!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Book is added to Favorites List!", Toast.LENGTH_LONG).show()
                             // Refresh data if necessary
                             bookAdapterCallback.refreshData()
                         }

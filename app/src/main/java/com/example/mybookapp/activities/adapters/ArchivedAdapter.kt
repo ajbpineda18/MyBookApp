@@ -41,7 +41,7 @@ class ArchivedAdapter (
         RecyclerView.ViewHolder(binding.root) {
         fun bind(book: Books) {
             with(binding) {
-                txtBookName.text = String.format("Book: %s", book.bookName)
+                txtBookName.text = String.format("Title: %s", book.bookName)
                 txtAuthor.text = String.format("Author: %s", book.author)
                 txtPublished.text =
                     String.format("Date Published: %s", formatDate(book.dateBookPublished))

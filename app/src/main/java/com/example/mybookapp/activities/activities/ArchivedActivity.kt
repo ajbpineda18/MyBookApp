@@ -43,7 +43,7 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
 
             AlertDialog.Builder(this@ArchivedActivity)
                 .setTitle("Delete")
-                .setMessage("Are you sure you want to permanently delete this?")
+                .setMessage("Are you sure you want to delete this permanently?")
                 .setPositiveButton("Delete") { _, _ ->
                     adapter.onItemDismiss(position)
 
@@ -144,7 +144,7 @@ class ArchivedActivity: AppCompatActivity(), ArchivedAdapter.ArchivedBooksAdapte
             withContext(Dispatchers.Main) {
                 adapter.updateBookList(booksList)
                 adapter.notifyDataSetChanged()
-                binding.empty.text = if (booksList.isEmpty()) "No Archived Books Yet..." else ""
+                binding.empty.text = if (booksList.isEmpty()) "No Books Archived in this List" else ""
             }
         }
     }

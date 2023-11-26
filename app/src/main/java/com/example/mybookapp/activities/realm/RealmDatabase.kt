@@ -44,7 +44,7 @@ class RealmDatabase {
                 val manageBook = copyToRealm(newBook)
             }
             else{
-                throw IllegalStateException("Book duplicate!.")
+                throw IllegalStateException("Book Duplicate!.")
             }
         }
     }
@@ -59,7 +59,7 @@ class RealmDatabase {
                 }
             }
             else{
-                throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
+                throw IllegalStateException("Book with Title: $bookID is Not Found. Cannot Update.")
             }
         }
     }
@@ -74,7 +74,7 @@ class RealmDatabase {
                 }
             }
             else{
-                throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
+                throw IllegalStateException("Book with Title: $bookID is Not Found. Cannot Update.")
             }
         }
     }
@@ -89,7 +89,7 @@ class RealmDatabase {
                 }
             }
             else{
-                throw IllegalStateException("Book with ID $archiveBookID not found. Cannot update.")
+                throw IllegalStateException("Book with Title: $archiveBookID is Not Found. Cannot Update.")
             }
         }
 
@@ -105,7 +105,7 @@ class RealmDatabase {
                 }
             }
             else{
-                throw IllegalStateException("Book with ID $archiveBookID not found. Cannot update.")
+                throw IllegalStateException("Book with Title: $archiveBookID is Not Found. Cannot Update.")
             }
         }
 
@@ -114,7 +114,7 @@ class RealmDatabase {
     suspend fun deleteBook(bookId: ObjectId){
         //val deleteID = BsonObjectId(book.id)
         realm.write {
-            query<BookRealm>("id == $0", bookId).first().find()?.let { delete(it) } ?: throw IllegalStateException("Book not found")
+            query<BookRealm>("id == $0", bookId).first().find()?.let { delete(it) } ?: throw IllegalStateException("Book Not Found")
         }
     }
 }

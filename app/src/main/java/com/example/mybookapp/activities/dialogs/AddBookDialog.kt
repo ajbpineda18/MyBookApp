@@ -77,7 +77,7 @@ class AddBookDialog : DialogFragment() {
                     scope.launch(Dispatchers.IO) {
                         database.addBook(bookName, bookAuthor, bookPublished, currentDate, currentDate)
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(activity, "Book has been added!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(activity, "This Book has been Added!", Toast.LENGTH_LONG).show()
                             refreshDataCallback.refreshData()
                             dialog?.dismiss()
                         }
