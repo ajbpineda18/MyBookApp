@@ -24,9 +24,9 @@ import java.util.Locale
 
 class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterInterface {
     private lateinit var binding: ActivityFavoritesBinding
-    private lateinit var itemTouchHelper: ItemTouchHelper
-    private lateinit var booksList: ArrayList<Books>
     private lateinit var adapter: FavBooksAdapter
+    private lateinit var booksList: ArrayList<Books>
+    private lateinit var itemTouchHelper: ItemTouchHelper
     private var database = RealmDatabase()
     private val swipeToDeleteCallback = object : ItemTouchHelper.SimpleCallback(
         0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -55,6 +55,7 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
                 }
                 .show()
             getBooks()
+
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,9 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
         itemTouchHelper.attachToRecyclerView(binding.rvFavBooks)
 
         getBooks()
+
     }
+
     override fun unFavBook(bookId: String, position: Int) {
         val coroutineContext = Job() + Dispatchers.IO
         val scope = CoroutineScope(coroutineContext + CoroutineName("favBook"))
@@ -88,9 +91,11 @@ class FavoritesActivity : AppCompatActivity(), FavBooksAdapter.FavBooksAdapterIn
             }
         }
     }
+
     override fun refreshData(){
         getBooks()
     }
+
     private fun mapBooks(books: BookRealm): Books {
         val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
         return Books(
