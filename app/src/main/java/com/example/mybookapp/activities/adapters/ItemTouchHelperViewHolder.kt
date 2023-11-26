@@ -1,4 +1,4 @@
-package ph.edu.rv_realm_quiz.adapters
+package com.example.mybookapp.activities.adapters
 
 
 interface ItemTouchHelperViewHolder {
