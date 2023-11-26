@@ -10,13 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.activities.MainActivity"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-277dp">
+        tools:layout_editor_absoluteX="-205dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
-            android:layout_width="108dp"
-            android:layout_height="29dp"
-            android:text="WELCOME!"
+            android:id="@+id/textView"
+            android:layout_width="275dp"
+            android:layout_height="31dp"
+            android:text="WELCOME, BOOKWORM!"
+            android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,6 +27,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.394" />
+
+        <Button
+            android:id="@+id/btn_book_list"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="BOOK LIST"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.486" />
+
+        <Button
+            android:id="@+id/btn_favorites_list"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="FAVORITES LIST"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.556" />
+
+        <Button
+            android:id="@+id/btn_archived_list"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="ARCHIVED LIST"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.626" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -35,18 +73,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/btn_book_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="BOOK LIST" />
-
-        <Button
-            android:id="@+id/btn_favorites_list"
-            android:layout_width="169dp"
-            android:layout_height="wrap_content"
-            android:text="FAVORITES LIST" />
 
     </LinearLayout>
 

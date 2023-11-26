@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btnBookList.setOnClickListener(this)
         binding.btnFavoritesList.setOnClickListener(this)
+        binding.btnArchivedList.setOnClickListener(this)
 
     }
 
@@ -30,7 +31,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, FavoritesActivity::class.java)
                 startActivity(intent)
             }
-
+            R.id.btn_archived_list -> {
+                val intent = Intent(this, ArchivedActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }
