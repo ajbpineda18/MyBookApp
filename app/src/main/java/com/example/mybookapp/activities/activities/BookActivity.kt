@@ -40,7 +40,7 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
-        ) = true
+        ): Boolean = true
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.adapterPosition
@@ -51,15 +51,14 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
                 .setMessage("Do you want to archive this book?")
                 .setPositiveButton("Archive") { _, _ ->
                     adapter.onItemDismiss(position)
-
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
                     adapter.notifyItemChanged(position)
                     dialog.dismiss()
                 }
                 .show()
-            getBooks()
 
+            getBooks()
         }
     }
     override fun refreshData(){
@@ -67,7 +66,6 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
     }
     override fun onResume() {
         super.onResume()
-        //TODO: REALM DISCUSSION HERE
         getBooks()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,17 +103,12 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
         )
     }
     fun getBooks() {
-        val coroutineContext = Job() + Dispatchers.IO
-        val scope = CoroutineScope(coroutineContext + CoroutineName("LoadAllBooks"))
+        val coroutineScope = CoroutineScope(Job() + Dispatchers.IO + CoroutineName("LoadAllBooks"))
 
-        scope.launch(Dispatchers.IO) {
+        coroutineScope.launch {
             val books = database.getAllBooks()
-            val booksList = arrayListOf<Books>()
-            booksList.addAll(
-                books.map {
-                    mapBooks(it)
-                }
-            )
+            val booksList = ArrayList(books.map { mapBooks(it) })
+
             withContext(Dispatchers.Main) {
                 adapter.updateBookList(booksList)
                 adapter.notifyDataSetChanged()
@@ -125,18 +118,20 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
     }
 
     override fun archiveBook(bookId: ObjectId, position: Int) {
-        val coroutineContext = Job() + Dispatchers.IO
-        val scope = CoroutineScope(coroutineContext + CoroutineName("archiveBook"))
-        scope.launch(Dispatchers.IO) {
+        val coroutineScope = CoroutineScope(Job() + Dispatchers.IO + CoroutineName("archiveBook"))
+
+        coroutineScope.launch {
             val book = booksList[position]
             database.archiveBook(book)
-            withContext(Dispatchers.Main){
+
+            withContext(Dispatchers.Main) {
                 booksList.removeAt(position)
                 adapter.notifyItemRemoved(position)
-                adapter.updateBookList(database.getAllBooks().map {mapBooks(it)} as ArrayList<Books>)
+                val updatedBooks = database.getAllBooks().map { mapBooks(it) } as ArrayList<Books>
+                adapter.updateBookList(updatedBooks)
+
                 Snackbar.make(binding.root, "Book Archived Successfully", Snackbar.LENGTH_LONG).show()
             }
-
         }
     }
 }
