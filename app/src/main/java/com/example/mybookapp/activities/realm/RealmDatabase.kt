@@ -14,19 +14,15 @@ class RealmDatabase {
             .build()
         Realm.open(configuration)
     }
-
     fun getAllBooks(): List<BookRealm>{
         return realm.query<BookRealm>("isArchived == false && isFav == false").find()
     }
-
     fun getArchivedBooks(): List<BookRealm>{
         return realm.query<BookRealm>("isArchived == true").find()
     }
-
     fun getFavoriteBooks(): List<BookRealm>{
         return realm.query<BookRealm>("isFav == true").find()
     }
-
     suspend fun addBook(bookName: String, bookAuthor: String, datePublished: Long, dateAdded: Long, dateModified: Long) {
         val dupeBookChecker: BookRealm? = realm.query<BookRealm>("author == $0 && name == $1 && dateBookPublished == $2", bookAuthor, bookName, datePublished).first().find()
         realm.write {
@@ -38,15 +34,13 @@ class RealmDatabase {
                     dateBookAdded = dateAdded
                     dateBookModified = dateModified
                 }
-
                 val manageBook = copyToRealm(newBook)
             }
             else{
-                throw IllegalStateException("Book duplicate!.")
+                throw IllegalStateException("Book Duplicate!.")
             }
         }
     }
-
     suspend fun favBook(book: Books){
         realm.write {
             val bookID = BsonObjectId(book.id)
@@ -57,11 +51,10 @@ class RealmDatabase {
                 }
             }
             else{
-                throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
-            }
+                throw IllegalStateException("Book with ID $bookID not found. Cannot Be Updated.")
+
         }
     }
-
     suspend fun unFavBook(book: Books){
         realm.write {
             val bookID = BsonObjectId(book.id)
@@ -72,7 +65,7 @@ class RealmDatabase {
                 }
             }
             else{
-                throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
+                throw IllegalStateException("Book with ID $bookID Not Found. Cannot Be Updated.")
             }
         }
         suspend fun archiveDBook(book: Books){
@@ -85,7 +78,7 @@ class RealmDatabase {
                     }
                 }
                 else{
-                    throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
+                    throw IllegalStateException("Book with ID $bookID Not Found. Cannot Be Updated.")
                 }
             }
         }
@@ -99,7 +92,7 @@ class RealmDatabase {
                     }
                 }
                 else{
-                    throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
+                    throw IllegalStateException("Book with ID $bookID Not Found. Cannot Be Updated.")
                 }
             }
         }

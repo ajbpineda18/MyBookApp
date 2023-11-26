@@ -24,11 +24,11 @@ import java.util.Locale
 
 class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
     AddBookDialog.RefreshDataInterface {
-    private lateinit var binding: ActivityBookBinding
-    private lateinit var adapter: BooksAdapter
-    private lateinit var booksList: ArrayList<Books>
     private lateinit var itemTouchHelper: ItemTouchHelper
+    private lateinit var binding: ActivityBookBinding
+    private lateinit var booksList: ArrayList<Books>
     private var database = RealmDatabase()
+    private lateinit var adapter: BooksAdapter
 
     private val swipeToDeleteCallback = object : ItemTouchHelper.SimpleCallback(
         0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -45,7 +45,7 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
 
             AlertDialog.Builder(this@BookActivity)
                 .setTitle("Delete")
-                .setMessage("Are you sure you want to archive this?")
+                .setMessage("Are you sure you want to Archive this?")
                 .setPositiveButton("Archive") { _, _ ->
                     adapter.onItemDismiss(position)
                     getBooks()
@@ -58,12 +58,11 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
         }
     }
 
-    override fun refreshData() {
-        getBooks()
-    }
-
     override fun onResume() {
         super.onResume()
+        getBooks()
+    }
+    override fun refreshData() {
         getBooks()
     }
 

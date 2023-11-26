@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.example.mybookapp.activities.realm.RealmDatabase
 import com.example.mybookapp.databinding.DialogAddBookBinding
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.example.mybookapp.activities.realm.RealmDatabase
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -24,20 +24,16 @@ import java.util.Locale
 class AddBookDialog : DialogFragment() {
 
     private lateinit var binding: DialogAddBookBinding
-    private var database = RealmDatabase()
-    private var isDateSelected = false
-    //private var datePickerCallback: DatePickerCallback? = null
     lateinit var refreshDataCallback: RefreshDataInterface
     private var date: Date? = Calendar.getInstance().time
+    private var database = RealmDatabase()
+    private var isDateSelected = false
     interface DatePickerCallback {
         fun onDateSelected(selectedDate: Date)
     }
-
     interface RefreshDataInterface{
         fun refreshData()
     }
-
-
 
     override fun onStart() {
         super.onStart()
@@ -46,7 +42,6 @@ class AddBookDialog : DialogFragment() {
             WindowManager.LayoutParams.WRAP_CONTENT
         )
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +50,6 @@ class AddBookDialog : DialogFragment() {
         binding = DialogAddBookBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -87,47 +81,35 @@ class AddBookDialog : DialogFragment() {
                             refreshDataCallback.refreshData()
                             dialog?.dismiss()
                         }
-
                     }
                 }
-
                 else{
                     Toast.makeText(activity, "Error! $bookPublished is null!", Toast.LENGTH_LONG).show()
                 }
-                // ... rest of your logic
             }
         }
     }
-
     private fun showDatePicker() {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        //val datePickerCallback = datePickerCallback
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _, selectedYear, selectedMonth, selectedDay ->
-                // Handle the selected date
                 val selectedCalendar = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
                 val selectedDate = selectedCalendar.time
                 date = selectedDate
 
-                // Set the selected date to the TextView or any other UI element
                 binding.tvDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)
-
-                // Notify the callback with the selected date
-                //datePickerCallback?.onDateSelected(selectedDate)
                 binding.btnAddBook.isEnabled = true
             },
             year,
             month,
             day
         )
-
         datePickerDialog.show()
     }
-
 }

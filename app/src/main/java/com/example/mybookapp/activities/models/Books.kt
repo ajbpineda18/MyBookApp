@@ -1,6 +1,5 @@
 package com.example.mybookapp.activities.models
 
-import java.time.LocalDate
 import java.util.Date
 
 data class Books (
@@ -10,6 +9,4 @@ data class Books (
     val dateBookPublished: Date,
     val dateBookAdded: Date,
     val dateBookModified: Date,
-//    val isFav: Boolean,
-//    val isArchived: Boolean
 )
