@@ -54,7 +54,7 @@ class ArchivedAdapter (
                     val coroutineContext = Job() + Dispatchers.IO
                     val scope = CoroutineScope(coroutineContext + CoroutineName("unarchiveBook"))
                     scope.launch(Dispatchers.IO) {
-                        database.unArchivedBook(book)
+                        database.unArchiveBook(book)
                         withContext(Dispatchers.Main) {
                             // You can update the UI or show a message if needed
                             Toast.makeText(context, "Book Unarchived!", Toast.LENGTH_LONG).show()

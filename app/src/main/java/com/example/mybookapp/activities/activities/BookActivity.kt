@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.mongodb.kbson.ObjectId
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -26,9 +27,10 @@ import java.util.Locale
 class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
     AddBookDialog.RefreshDataInterface {
     private lateinit var binding: ActivityBookBinding
-    private lateinit var adapter: BooksAdapter
     private lateinit var booksList: ArrayList<Books>
+    private lateinit var adapter: BooksAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
+
     private var database = RealmDatabase()
 
     private val swipeToDeleteCallback = object : ItemTouchHelper.SimpleCallback(
@@ -84,7 +86,7 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
         binding.rvBooks.layoutManager = layoutManger
 
         booksList = arrayListOf()
-        adapter = BooksAdapter(booksList, this, this)
+        adapter = BooksAdapter(booksList,this, this)
         binding.rvBooks.adapter = adapter
 
         itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
@@ -120,10 +122,6 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
         )
     }
 
-
-
-
-
     fun getBooks() {
         val coroutineContext = Job() + Dispatchers.IO
         val scope = CoroutineScope(coroutineContext + CoroutineName("LoadAllBooks"))
@@ -144,12 +142,19 @@ class BookActivity : AppCompatActivity(), BooksAdapter.BooksAdapterInterface,
         }
     }
 
-//    override fun archiveBooks(ownerId: String, position: Int) {
-//        val coroutineContext = Job() + Dispatchers.IO
-//        val scope = CoroutineScope(coroutineContext + CoroutineName("archiveBook"))
-//        scope.launch(Dispatchers.IO) {
-//
-//        }
-//    }
+    override fun archiveBook(bookId: ObjectId, position: Int) {
+        val coroutineContext = Job() + Dispatchers.IO
+        val scope = CoroutineScope(coroutineContext + CoroutineName("archiveBook"))
+        scope.launch(Dispatchers.IO) {
+            val book = booksList[position]
+            database.archiveBook(book)
+            withContext(Dispatchers.Main){
+                booksList.removeAt(position)
+                adapter.notifyItemRemoved(position)
+                adapter.updateBookList(database.getAllBooks().map {mapBooks(it)} as ArrayList<Books>)
+                Snackbar.make(binding.root, "Book Archived Successfully", Snackbar.LENGTH_LONG).show()
+            }
 
+        }
+    }
 }
