@@ -75,5 +75,33 @@ class RealmDatabase {
                 throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
             }
         }
+        suspend fun archiveDBook(book: Books){
+            realm.write {
+                val bookID = BsonObjectId(book.id)
+                val bookRealm = query<BookRealm>("id == $0", bookID).first().find()
+                if(bookRealm != null){
+                    findLatest(bookRealm).apply {
+                        this!!.isArchived = false
+                    }
+                }
+                else{
+                    throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
+                }
+            }
+        }
+        suspend fun unArchivedBook(book: Books){
+            realm.write {
+                val bookID = BsonObjectId(book.id)
+                val bookRealm = query<BookRealm>("id == $0", bookID).first().find()
+                if(bookRealm != null){
+                    findLatest(bookRealm).apply {
+                        this!!.isArchived = false
+                    }
+                }
+                else{
+                    throw IllegalStateException("Book with ID $bookID not found. Cannot update.")
+                }
+            }
+        }
     }
 }
